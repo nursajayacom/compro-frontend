@@ -1,0 +1,25 @@
+div.dt-container .dt-paging .dt-paging-button.current,
+div.dt-container .dt-paging .dt-paging-button.current:hover,
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: #e5f3fb !important;
+    color: #006aaf !important;
+    border-color: inherit !important;
+}
+
+div.dt-container select.dt-input {
+    padding-right: 2rem !important;
+}
+
+.dt-info {
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1)) !important;
+    font-size: 14px !important;
+}
+
+.dt-length label {
+    display: none !important;
+}
+
+table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
+    border-bottom: none !important;
+}
