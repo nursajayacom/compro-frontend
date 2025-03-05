@@ -82,7 +82,7 @@
 <div class="py-20 px-6 sm:px-16">
     <div class="rounded-lg overflow-hidden">
         <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0773606262395!2d-122.4362447842787!3d37.7897086797564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c5c477d1d%3A0x1c5e3cbccd7b92b1!2sAlta%20Plaza%20Park!5e0!3m2!1sen!2sus!4v1615581849384!5m2!1sen!2sus"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.418837518752!2d106.8374792!3d-6.2083569999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5001c8745bf%3A0x72b709d51e3f8c86!2sPasar%20Manggis!5e0!3m2!1sid!2sid!4v1740759366460!5m2!1sid!2sid"
         width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy">
         </iframe>
     </div>
