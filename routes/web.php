@@ -28,6 +28,7 @@ Route::get('/about-us', [PagesController::class, 'aboutUs'])->name('general.abou
 Route::get('/news', [PagesController::class, 'news'])->name('general.news');
 Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('general.contact-us');
 Route::post('contact-us', [PagesController::class, 'sendContactUs'])->name('general.contact-us.send');
+Route::post('contact-us-popup', [PagesController::class, 'sendContactUsPopUp'])->name('general.contact-us.send.popup');
 
 Route::get('/dashboard', [ProfileController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 

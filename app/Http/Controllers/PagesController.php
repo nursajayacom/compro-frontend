@@ -69,10 +69,11 @@ class PagesController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $products = Product::all()->take(5)->sortByDesc('created_at');
+        $products = Product::latest()->where('stock', '>', 0)->take(4)->get();
         $news = collect($this->data)->take(4);
         return view('general.index', compact('categories', 'news', 'products'));
     }
+
     public function product(Request $request)
     {
         $search = $request->search;
@@ -87,7 +88,9 @@ class PagesController extends Controller
             ->when($categorySlug, fn($q) => $q->where('category_id', $getCategory->id))
             ->paginate(3);
 
-        return view('general.product', compact('products', 'search', 'categories', 'categorySlug'));
+        $countProduct = $products->count();
+
+        return view('general.product', compact('products', 'search', 'categories', 'categorySlug', 'countProduct'));
     }
 
     public function productDetail(Product $product)
@@ -143,5 +146,22 @@ class PagesController extends Controller
         Message::create($data);
 
         return back()->with('success', 'Terima kasih telah menghubungi kami. Pesan Anda telah kami terima.');
+    }
+
+    public function sendContactUsPopUp(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'telp' => 'required',
+            'message' => 'required',
+        ]);
+
+        Message::create($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Terima kasih telah menghubungi kami. Pesan Anda telah kami terima.'
+        ]);
     }
 }

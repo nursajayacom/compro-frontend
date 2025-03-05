@@ -39,9 +39,25 @@ searchBtnMobile.addEventListener('click', () => {
 closeSearch.addEventListener('click', () => {
     searchOverlay.classList.add('hidden');
 });
-
-clearSearch.addEventListener('click', () => {
-    inputField.value = '';
-    inputField.focus();
-});
 // END SEARCH BAR
+
+
+const popup = document.getElementById("popup");
+const openPopupBtn = document.getElementById("openPopup");
+const closePopupBtn = document.getElementById("closePopup");
+
+openPopupBtn.addEventListener("click", () => {
+    popup.classList.remove("hidden");
+    setTimeout(() => {
+        popup.classList.remove("translate-y-full", "opacity-0");
+        popup.classList.add("translate-y-0", "opacity-100");
+    }, 10);
+});
+
+closePopupBtn.addEventListener("click", () => {
+    popup.classList.remove("translate-y-0", "opacity-100");
+    popup.classList.add("translate-y-full", "opacity-0");
+    setTimeout(() => {
+        popup.classList.add("hidden");
+    }, 300);
+});
