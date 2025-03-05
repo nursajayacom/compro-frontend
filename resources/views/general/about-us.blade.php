@@ -4,14 +4,14 @@
 
 @section('content')
 <div class="px-6 sm:px-16 pt-24">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
         <div>
-            <h1 class="text-5xl font-bold leading-tight mb-4">
+            <h1 class="text-2xl sm:text-5xl font-bold leading-tight">
                 Solusi Terpercaya untuk Kebutuhan Kantor Anda!
             </h1>
         </div>
         <div>
-            <p class="text-gray-600 text-lg">
+            <p class="text-gray-600 text-sm sm:text-lg">
                 Nursa Jaya Comp hadir untuk menyediakan tinta, toner, dan perlengkapan kantor berkualitas tinggi dengan layanan profesional dan solusi inovatif.
             </p>
         </div>
@@ -23,12 +23,12 @@
 </div>
 
 <div class="px-6 sm:px-16 pb-20">
-    <h2 class="text-lg text-primary font-semibold mb-8">Visi</h2>
-    <p class="text-secondary text-3xl font-bold">
+    <h2 class="sm:text-lg text-primary font-semibold mb-8">Visi</h2>
+    <p class="text-secondary text-2xl sm:text-3xl font-bold">
     Menjadi penyedia utama dan terpercaya untuk tinta, toner original, dan kebutuhan alat kantor lainnya, yang dikenal karena kualitas produk, pelayanan profesional, dan solusi inovatif untuk memenuhi kebutuhan pelanggan.
     </p>
 
-    <h2 class="text-lg text-primary font-semibold my-8">Misi</h2>
+    <h2 class="sm:text-lg text-primary font-semibold my-8">Misi</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     <div class="bg-card p-6 rounded-lg">
         <h3 class="text-6xl font-bold text-triary mb-4">1</h3>
@@ -62,8 +62,8 @@
 <div class="px-6 sm:px-16 py-20">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div>
-            <h2 class="text-3xl text-primary font-bold mb-4">Menyediakan yang Terbaik, Melayani dengan Profesionalisme</h2>
-            <p class="text-gray-700 leading-relaxed">
+            <h2 class="text-2xl sm:text-3xl text-primary font-bold mb-4">Menyediakan yang Terbaik, Melayani dengan Profesionalisme</h2>
+            <p class="text-sm sm:text-base text-gray-700 leading-relaxed">
                 Nursa Jaya Comp memulai perjalanannya pada tahun 2016 dengan membuka toko fisik di Pasar Manggis. Pada awalnya, perusahaan ini fokus pada penjualan tinta, toner, dan perlengkapan kantor lainnya. <br><br>
                 Seiring berjalannya waktu, Nursa Jaya Comp terus berinovasi untuk memenuhi kebutuhan pelanggan yang semakin berkembang. Pada tahun 2018, perusahaan ini mulai memperluas jangkauannya dengan menjual produknya melalui platform e-commerce terkemuka seperti Tokopedia, Shopee, dan Lazada. Langkah ini memungkinkan Nursa Jaya Comp untuk menjangkau pelanggan di seluruh Indonesia dan meningkatkan penjualan secara signifikan. <br><br>
                 Pada tahun 2024, Nursa Jaya Comp mencapai tonggak penting lainnya dengan mendaftarkan perusahaannya secara resmi ke Direktorat Jenderal Administrasi Hukum. Langkah ini menegaskan komitmen perusahaan terhadap legalitas dan memberikan kepercayaan yang lebih besar kepada pelanggan dan mitra bisnis. <br><br>
