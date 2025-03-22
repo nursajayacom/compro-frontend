@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Detail Product')
+@section('title', 'Detail Product - '. $product->name)
 
 @section('content')
 <div class="py-20 px-6 sm:px-16">
@@ -41,7 +41,7 @@
         <!-- Product Details -->
         <div>
             <h1 class="text-3xl text-primary font-bold mb-2">{{ $product->name }}</h1>
-            <p class="text-secondary mb-4">{{ $product->category->name }} • {{ $product->brand->name }} • Stok <span class="text-triary">{{ $product->stock }}</span></p>
+            <p class="text-secondary mb-4">{{ $product->category->name }} • {{ $product->brand->name }} • Stok <span class="text-triary">Tersedia</span></p>
 
             <div class="border-t pt-4 mt-4">
                 <h2 class="text-secondary">Deskripsi</h2>

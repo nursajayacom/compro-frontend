@@ -3,7 +3,7 @@
 @section('title', 'Berita')
 
 @section('content')
-<div class="pt-20 px-6 sm:px-16">
+<div class="pt-20 px-6 sm:px-16" data-aos="fade-down">
     <div class="relative w-full h-[400px] bg-cover bg-center" style="background-image: url('{{ $data[0]['image'] }}'); background-size: cover; background-repeat: no-repeat;">
         <div class="absolute inset-0 bg-black/50"></div>
         <div class="relative z-10 flex flex-col justify-end h-full px-6 pb-6 mx-auto text-white">
@@ -19,7 +19,7 @@
 </div>
 
 <!-- News Cards -->
-<div class="py-20 grid grid-cols-1 gap-6 px-6 sm:px-16 mt-8 sm:grid-cols-2 lg:grid-cols-3">
+<div class="py-20 grid grid-cols-1 gap-6 px-6 sm:px-16 mt-8 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-down">
     <!-- Card -->
     @foreach ($data as $item)
         @if ($loop->first)

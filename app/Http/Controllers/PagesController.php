@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Message;
 use App\Models\Product;
@@ -78,19 +79,44 @@ class PagesController extends Controller
     {
         $search = $request->search;
         $categorySlug = $request->category;
+        $brandSlug = $request->brand;
+
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        $productsQuery = Product::query();
+
+        // Filter kategori
         if ($categorySlug) {
             $getCategory = Category::whereSlug($categorySlug)->first();
+            if ($getCategory) {
+                $productsQuery->where('category_id', $getCategory->id);
+
+                // Ambil hanya brand yang memiliki produk dalam kategori ini
+                $brands = Brand::whereIn('id', Product::where('category_id', $getCategory->id)->pluck('brand_id')->unique())->get();
+            }
         }
-        $categories = Category::all();
 
-        $products = Product::query()
-            ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
-            ->when($categorySlug, fn($q) => $q->where('category_id', $getCategory->id))
-            ->paginate(3);
+        // Filter pencarian
+        if ($search) {
+            $productsQuery->where('name', 'like', "%{$search}%");
 
+            // Ambil hanya brand yang memiliki produk yang sesuai pencarian
+            $brands = Brand::whereIn('id', Product::where('name', 'like', "%{$search}%")->pluck('brand_id')->unique())->get();
+        }
+
+        // Jika brand dipilih, filter berdasarkan slug
+        if ($brandSlug) {
+            $getBrand = Brand::whereSlug($brandSlug)->first();
+            if ($getBrand) {
+                $productsQuery->where('brand_id', $getBrand->id);
+            }
+        }
+
+        $products = $productsQuery->paginate(12);
         $countProduct = $products->count();
 
-        return view('general.product', compact('products', 'search', 'categories', 'categorySlug', 'countProduct'));
+        return view('general.product', compact('products', 'search', 'categories', 'categorySlug', 'countProduct', 'brands', 'brandSlug'));
     }
 
     public function productDetail(Product $product)
@@ -106,14 +132,22 @@ class PagesController extends Controller
     public function loadMoreProduct(Request $request)
     {
         $categorySlug = $request->category;
-        if ($categorySlug) {
-            $getCategory = Category::whereSlug($categorySlug)->first();
-        }
+        $brandSlug = $request->brand;
+
+        $getCategory = $categorySlug ? Category::whereSlug($categorySlug)->first() : null;
+        $getBrand = $brandSlug ? Brand::whereSlug($brandSlug)->first() : null;
 
         $products = Product::query()
-        ->when($request->search, fn($q) => $q->where('name', 'like', "%{$request->search}%"))
-        ->when($categorySlug, fn($q) => $q->where('category_id', $getCategory->id))
-        ->paginate(3);
+                ->when($request->search, function ($query) use ($request) {
+                    $query->where('name', 'like', "%{$request->search}%");
+                })
+                ->when(isset($getCategory), function ($query) use ($getCategory) {
+                    $query->where('category_id', $getCategory->id);
+                })
+                ->when(isset($getBrand), function ($query) use ($getBrand) {
+                    $query->where('brand_id', $getBrand->id);
+                })
+                ->paginate(12);
 
         return view('general.partials.product-list', compact('products'))->render();
     }
@@ -121,6 +155,11 @@ class PagesController extends Controller
     public function aboutUs()
     {
         return view('general.about-us');
+    }
+
+    public function ourService()
+    {
+        return view('general.our-service');
     }
 
     public function news()
@@ -163,5 +202,11 @@ class PagesController extends Controller
             'success' => true,
             'message' => 'Terima kasih telah menghubungi kami. Pesan Anda telah kami terima.'
         ]);
+    }
+
+    public function sitemap() {
+        return response()
+            ->view('sitemap')
+            ->header('Content-Type', 'application/xml');
     }
 }

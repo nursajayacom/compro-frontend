@@ -7,8 +7,8 @@
 @endpush
 
 @section('content')
-<div class="py-20 px-6 sm:px-16">
-    <div class="relative w-full overflow-hidden h-full rounded-lg shadow-lg">
+<div class="md:pb-16 pt-20 px-6 md:px-16" data-aos="fade-up">
+    <div class="relative w-full overflow-hidden h-full">
         <!-- Slides Wrapper -->
         <div id="carousel-slides" class="relative flex transition-transform duration-500 ease-in-out">
             <!-- Slide 1 -->
@@ -59,74 +59,59 @@
     </div>
 </div>
 
-<div class="py-20 px-6 sm:px-16">
-    <section class="max-w-7xl">
-        <h2 class="text-center text-3xl font-semibold mb-8 text-primary">Produk Terlaris</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-card rounded-2xl p-6 flex flex-col items-center">
-                <img src="{{ asset('storage/' .$products->first()->images->first()->image_path) }}" alt="{{ $products->first()->name }}" class="w-full max-w-md object-contain">
-                <div class="text-center mt-4">
-                    <h3 class="font-bold text-2xl text-primary">{{ $products->first()->name }}</h3>
-                    <p class="text-secondary text-lg">{{ $products->first()->category->name }}</p>
-                </div>
-            </div>
-            <!-- Produk Kecil -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                @foreach ($products as $product)
-                    @if ($loop->first)
-                        @continue
-                    @endif
-                    <div class="bg-card rounded-2xl p-4 flex flex-col items-center">
-                        <img src="{{ asset('storage/' .$product->images->first()->image_path) }}" alt="Epson EcoTank L3250" class="w-full h-[280px] object-cover">
-                        <div class="text-center mt-2">
-                            <h3 class="font-bold text-lg">{{ $product->name }}</h3>
-                            <p class="text-secondary text-base">{{ $product->category->name }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-</div>
-
-<div class="py-20 px-6 sm:px-16">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div>
-        <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-            Solusi Lengkap Tinta, Toner, dan <br class="hidden sm:block" />
-            Perlengkapan Kantor untuk Bisnis Anda
-        </h2>
-        <p class="text-gray-600 text-base sm:text-lg leading-relaxed">
-            Nursa Jaya Comp, solusi kebutuhan tinta, toner, dan perlengkapan kantor sejak 2016.
-            Tersedia di Tokopedia, Shopee, dan Lazada untuk menjangkau seluruh Indonesia dengan layanan cepat dan produk berkualitas.
-        </p>
-        </div>
-        <div>
-        <img
-            src="{{ asset('assets/images/banner-short-about-us.png') }}"
-            alt="Printer dengan hasil cetakan berwarna"
-            class="w-full object-cover"
-        />
-        </div>
-    </div>
-</div>
-
-<div class="py-20 px-6 sm:px-16">
-    <div class="flex gap-6 overflow-x-auto scrollbar-hide">
-        @foreach ($categories as $category)
-            <div class="relative rounded-2xl overflow-hidden group p-4 cursor-pointer bg-card-category min-w-[224px] min-h-[280px]">
-                <img src="{{ asset('storage/' . $category->image) }}"
-                alt="{{ $category->name }} - Nursa Jaya Comp"
-                class="w-full object-cover rounded-xl h-60" />
-                <h4 class="mt-4 text-lg font-bold text-[#293B53]">{{ $category->name }}</h4>
-            </div>
-        @endforeach
-    </div>
-</div>
-
-<div class="py-20 px-6 sm:px-16">
+<div class="py-10 px-6 md:px-16" data-aos="fade-down">
     <div class="flex flex-col sm:flex-row gap-6 sm:justify-between sm:items-center mb-8">
-        <h2 class="text-3xl font-bold text-primary sm:w-1/3">
+        <h2 class="text-lg sm:text-3xl font-bold text-primary sm:w-1/3">
+            Produk Terbaru, Lebih Canggih & Andal!
+        </h2>
+        <a href="{{ route('general.news') }}" class="w-max relative group inline-flex items-center bg-primary-btn text-base text-white font-bold py-4 px-6 rounded-full overflow-hidden hover:bg-primary-hover-btn transition-all duration-300">
+            Lihat Semua
+        </a>
+    </div>
+
+    <!-- Container dengan Scroll di Mobile -->
+    <div class="overflow-x-auto scrollbar-hide">
+        <div class="grid grid-cols-4 gap-6 w-max md:w-full">
+            @foreach ($products as $product)
+                <a href="{{ route('general.product-detail', $product->slug) }}" class="bg-white rounded-lg border border-[#DEE3ED] w-[220px] sm:w-auto">
+                    <!-- Gambar Produk dengan Rasio 1:1 -->
+                    <div class="relative w-full aspect-square overflow-hidden rounded-t">
+                        <img src="{{ Storage::url($product->images->first()->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Detail Produk -->
+                    <div class="px-2 md:px-4 py-4 md:py-6">
+                        <p class="font-bold text-sm md:text-lg text-primary line-clamp-2">{{ $product->name }}</p>
+                        <p class="text-secondary text-xs md:text-sm">{{ $product->category->name }}</p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<div class="py-10 px-6 md:px-16 hidden md:block" data-aos="fade-down">
+    <div class="w-full h-[400px] text-white px-16 py-10 rounded-2xl shadow-md flex flex-col justify-center service-section gap-4">
+        <h6 class="text-sm">Layanan Kami</h6>
+        <h2 class="text-3xl sm:text-5xl font-bold w-1/2">Jelajahi berbagai <br> layanan dan produk  <br>berkualitas untuk <br>kebutuhan cetak Anda.</h2>
+        <a href="{{ route('general.our-service') }}" class="bg-white w-max relative group inline-flex items-center text-base text-primary font-bold py-4 px-6 rounded-full overflow-hidden mt-8">
+            Pelajari Lebih Lanjut!
+        </a>
+    </div>
+</div>
+
+<div class="px-6 sm:px-16 block md:hidden" data-aos="fade-down">
+    <div class="w-full text-white px-4 py-6 rounded-2xl shadow-md flex flex-col justify-center service-section-mobile gap-4">
+        <h6 class="text-sm">Layanan Kami</h6>
+        <h2 class="text-xl font-bold">Jelajahi berbagai layanan dan produk berkualitas untuk kebutuhan cetak Anda.</h2>
+        <a href="{{ route('general.our-service') }}" class="bg-white w-max relative group inline-flex items-center text-base text-primary font-bold py-4 px-6 rounded-full overflow-hidden mt-2">
+            Pelajari Lebih Lanjut!
+        </a>
+    </div>
+</div>
+
+<div class="py-16 px-6 md:px-16" data-aos="fade-down">
+    <div class="flex flex-col sm:flex-row gap-6 sm:justify-between sm:items-center mb-8">
+        <h2 class="text-lg sm:text-3xl font-bold text-primary sm:w-1/3">
             Jangan Ketinggalan! Berita Terbaru dan Peristiwa Penting
         </h2>
         <a href="{{ route('general.news') }}" class="w-max relative group inline-flex items-center bg-primary-btn text-base text-white font-bold py-4 px-6 rounded-full overflow-hidden hover:bg-primary-hover-btn transition-all duration-300">
@@ -160,7 +145,7 @@
     </div>
 </div>
 
-<div class="py-20 px-6 sm:px-16">
+<div class="sm:py-16 px-6 md:px-16" data-aos="fade-down">
     <a href="https://blibli.onelink.me/GNtk/a49c5djs" target="_blank">
         <img src="{{ asset('assets/images/banner-3.png') }}" alt="Nursa Jaya Com Blibli" class="w-full object-cover" draggable="false">
     </a>
@@ -259,8 +244,8 @@
     </div>
 </div> --}}
 
-<div class="py-20 px-6 sm:px-16">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Kolaborasi dengan yang Terbaik</h2>
+<div class="py-10 px-6 md:px-16" data-aos="fade-down">
+    <h2 class="text-lg md:text-3xl font-bold text-center text-gray-800 mb-5">Produk Berkualitas dari Brand Terpercaya</h2>
     <!-- Swiper -->
     <div class="swiper mySwiper pt-10">
         <div class="swiper-wrapper">
@@ -275,10 +260,25 @@
                 <img src="{{ asset('assets/images/logo-samsung.png') }}" alt="Samsung" class="mx-auto">
             </div>
             <div class="swiper-slide">
-                <img src="{{ asset('assets/images/logo-toshiba.png') }}" alt="Toshiba" class="mx-auto">
+                <img src="{{ asset('assets/images/logo-brother.png') }}" alt="Brother" class="mx-auto">
             </div>
             <div class="swiper-slide">
-                <img src="{{ asset('assets/images/logo-fargo.png') }}" alt="Fargo" class="mx-auto">
+                <img src="{{ asset('assets/images/logo-minolta.png') }}" alt="Minolta" class="mx-auto">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('assets/images/logo-epson.png') }}" alt="Epson" class="mx-auto">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('assets/images/logo-panasonic.png') }}" alt="Panasonic" class="mx-auto">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('assets/images/logo-lexmark.png') }}" alt="Lexmark" class="mx-auto">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('assets/images/logo-casio.png') }}" alt="Casio" class="mx-auto">
+            </div>
+            <div class="swiper-slide">
+                <img src="{{ asset('assets/images/logo-hid.png') }}" alt="HID" class="mx-auto">
             </div>
         </div>
     </div>

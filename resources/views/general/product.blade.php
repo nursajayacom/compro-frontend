@@ -3,8 +3,8 @@
 @section('title', 'Product')
 
 @section('content')
-@if (!$search && !$categorySlug)
-    <div class="pt-20 px-6 sm:px-16">
+@if (!$search && !$categorySlug && !$brandSlug)
+    <div class="pt-20 px-6 sm:px-16" data-aos="fade-down">
         <a href="">
             <img src="{{ asset('assets/images/banner-2.png')}}" alt="Slide 1" class="w-full object-cover" draggable="false">
         </a>
@@ -14,13 +14,13 @@
 <div class="py-10 sm:py-20 px-6 sm:px-16">
     <div class="flex flex-col gap-4">
         <!-- Sidebar Kategori (Desktop) -->
-        <aside class="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <aside class="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" data-aos="fade-right">
             @foreach ($categories as $category)
             <div class="p-4 relative overflow-hidden min-h-[170px] border border-[#DEE3ED] rounded-lg bg-[#F6F9FC] z-0">
                 <!-- Nama Kategori dan Link -->
                 <div class="relative z-10">
                     <p class="font-bold mt-2 text-[#293B53] text-lg mb-2">{{ $category->name }}</p>
-                    <a href="{{ route('general.product', ['search' => $search, 'category' => $category->slug]) }}" class="text-[#E74C62] text-xs font-semibold flex flex-row items-center gap-2">
+                    <a href="{{ route('general.product', ['search' => $search, 'category' => $category->slug, 'brand' => $brandSlug]) }}" class="text-[#E74C62] text-xs font-semibold flex flex-row items-center gap-2">
                         Lihat Produk
                         <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.65528 4.99999H8.54784M8.54784 4.99999L5.89619 2.34834M8.54784 4.99999L5.89619 7.65164" stroke="#E74C62" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,10 +49,56 @@
             </ul>
         </aside> --}}
 
-        <div class="w-full mt-2 md:mt-16">
-            @if($search)
-                <h2 class="mb-6 text-primary">Menampilkan {{ $countProduct }} barang untuk <span class="font-bold">"{{ $search }}"</span></h2>
-            @endif
+        <div class="w-full mt-2 md:mt-16" data-aos="fade-down">
+            <div class="flex items-center justify-between mb-6">
+                @if($search || $categorySlug || $brandSlug)
+                    <h2 class="text-primary">
+                        Menampilkan {{ $countProduct }} barang
+                        @if($search)
+                            untuk <span class="font-bold">"{{ $search }}"</span>
+                        @endif
+                        @if($categorySlug)
+                            dalam kategori <span class="font-bold">"{{ $categories->firstWhere('slug', $categorySlug)?->name }}"</span>
+                        @endif
+                        @if($brandSlug)
+                            dari brand <span class="font-bold">"{{ $brands->firstWhere('slug', $brandSlug)?->name }}"</span>
+                        @endif
+                    </h2>
+                @endif
+
+
+                <form id="brandFilter" method="GET" action="{{ route('general.product') }}" class="md:ml-auto w-full md:w-auto flex flex-row gap-2 items-center">
+                    @if ($search)
+                        <input type="hidden" name="search" value="{{ $search }}">
+                    @endif
+                    @if ($categorySlug)
+                        <input type="hidden" name="category" value="{{ $categorySlug }}">
+                    @endif
+                    <label for="" class="text-secondary text-base font-bold">Pilih Brand</label>
+                    <div class="relative w-full sm:w-auto">
+                        <select name="brand" id="brandSelect" onchange="updateURL()" class="appearance-none bg-white border border-[#333333] text-secondary rounded-full focus:ring-blue-500 focus:border-blue-500 py-1 px-3 md:py-2 md:px-4 md:pr-8 w-full sm:w-auto text-sm md:text-base">
+                            <option value="">Semua Brand</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->slug }}" {{ $brandSlug == $brand->slug ? 'selected' : '' }}>
+                                    {{ $brand->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+                            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_480_673)">
+                                    <path d="M11.3327 6.83301L7.99935 10.1663L4.66602 6.83301" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_480_673">
+                                        <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
             <!-- Produk -->
             <main id="product-list" class="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -125,6 +171,7 @@
         const lastPage = {{ $products->lastPage() }};
         const searchQuery = '{{ request('search') }}';
         const categoryQuery = '{{ request('category') }}';
+        const brandQuery = '{{ request('brand') }}';
 
         if (loadMoreTrigger) {
             const observer = new IntersectionObserver(entries => {
@@ -137,7 +184,7 @@
 
             function loadMoreProducts() {
                 page++;
-                fetch(`{{ route('general.product.load') }}?page=${page}&search=${searchQuery}&category=${categoryQuery}`)
+                fetch(`{{ route('general.product.load') }}?page=${page}&search=${searchQuery}&category=${categoryQuery}&brand=${brandQuery}`)
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('product-list').insertAdjacentHTML('beforeend', html);
@@ -146,5 +193,19 @@
             }
         }
     });
+
+    function updateURL() {
+        let form = document.getElementById('brandFilter');
+        let brandSelect = document.getElementById('brandSelect');
+        let url = new URL(form.action, window.location.origin);
+        let params = new URLSearchParams(new FormData(form));
+
+        if (brandSelect.value === "") {
+            params.delete("brand");
+        }
+
+        let newUrl = url.pathname + (params.toString() ? "?" + params.toString() : "");
+        window.location.href = newUrl;
+    }
 </script>
 @endpush
