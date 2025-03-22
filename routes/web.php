@@ -27,12 +27,14 @@ Route::get('/product/load', [PagesController::class, 'loadMoreProduct'])->name('
 Route::get('/about-us', [PagesController::class, 'aboutUs'])->name('general.about-us');
 Route::get('/news', [PagesController::class, 'news'])->name('general.news');
 Route::get('/contact-us', [PagesController::class, 'contactUs'])->name('general.contact-us');
+Route::get('/our-service', [PagesController::class, 'ourService'])->name('general.our-service');
 Route::post('contact-us', [PagesController::class, 'sendContactUs'])->name('general.contact-us.send');
 Route::post('contact-us-popup', [PagesController::class, 'sendContactUsPopUp'])->name('general.contact-us.send.popup');
+Route::get('/sitemap.xml', [PagesController::class, 'sitemap'])->name('sitemap');
 
-Route::get('/dashboard', [ProfileController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('04c14af7709150a20c8c327a9e2628f43fe039be')->group(function () {
+    Route::get('/dashboard', [ProfileController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('products.index');
         Route::get('/create', [ProductController::class, 'create'])->name('products.create');
