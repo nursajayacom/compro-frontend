@@ -132,19 +132,19 @@
         });
 
         function openEditModal(id) {
-            fetch(`/brands/${id}/edit`)
+            fetch(`/04c14af7709150a20c8c327a9e2628f43fe039be/brands/${id}/edit`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('editBrandId').value = id;
                     document.getElementById('editBrandName').value = data.name;
-                    document.getElementById('editBrandForm').action = `/brands/${id}`;
+                    document.getElementById('editBrandForm').action = `/04c14af7709150a20c8c327a9e2628f43fe039be/brands/${id}`;
                     window.dispatchEvent(new CustomEvent('open-modal', { detail: 'editBrandModal' }));
                 });
         }
 
         function openDeleteModal(id) {
             document.getElementById('deleteBrandId').value = id;
-            document.getElementById('deleteBrandForm').action = `/brands/${id}`;
+            document.getElementById('deleteBrandForm').action = `/04c14af7709150a20c8c327a9e2628f43fe039be/brands/${id}`;
             window.dispatchEvent(new CustomEvent('open-modal', { detail: 'deleteBrandModal' }));
         }
     </script>

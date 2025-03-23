@@ -158,12 +158,12 @@
         });
 
         function openEditModal(id) {
-            fetch(`/categories/${id}/edit`)
+            fetch(`/04c14af7709150a20c8c327a9e2628f43fe039be/categories/${id}/edit`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('editCategoryId').value = id;
                     document.getElementById('editCategoryName').value = data.name;
-                    document.getElementById('editCategoryForm').action = `/categories/${id}`;
+                    document.getElementById('editCategoryForm').action = `/04c14af7709150a20c8c327a9e2628f43fe039be/categories/${id}`;
 
                     const imagePreview = document.getElementById('currentImagePreview');
                     if (data.image) {
@@ -179,7 +179,7 @@
 
         function openDeleteModal(id) {
             document.getElementById('deleteCategoryId').value = id;
-            document.getElementById('deleteCategoryForm').action = `/categories/${id}`;
+            document.getElementById('deleteCategoryForm').action = `/04c14af7709150a20c8c327a9e2628f43fe039be/categories/${id}`;
             window.dispatchEvent(new CustomEvent('open-modal', { detail: 'deleteCategoryModal' }));
         }
     </script>
